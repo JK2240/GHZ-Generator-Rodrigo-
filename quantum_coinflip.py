@@ -10,11 +10,14 @@ Original file is located at
 !pip install cirq --quiet
 import cirq
 
-qubit = cirq.NamedQubit('x')
-circuit = cirq.Circuit()
-circuit.append(cirq.H(qubit))
-circuit.append(cirq.measure(qubit))
-sim = cirq.Simulator()
-output = sim.run(circuit, repetitions=200)
-print(circuit)
-output
+def QuantumCoinflip():
+
+    qubit = cirq.NamedQubit('x')
+    circuit = cirq.Circuit()
+    circuit.append(cirq.H(qubit))
+    circuit.append(cirq.measure(qubit))
+    sim = cirq.Simulator()
+    output = sim.run(circuit, repetitions=200)
+    print(circuit)
+    output
+    return output 
