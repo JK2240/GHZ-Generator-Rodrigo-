@@ -26,3 +26,8 @@ sys.meta_path[:] = [f for f in sys.meta_path if "DaskFinder" not in str(f)]
 import ghz_group_b92_qkd
 import qkd_qith_ghz
 import quantum_coinflip
+
+if QuantumCoinflip(1) == 0:
+  run_B92(1)
+else:
+  run_simulation(num_bits = 1, eavesdropped = False)
