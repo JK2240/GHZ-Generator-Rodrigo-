@@ -11,40 +11,42 @@ Original file is located at
 
 import cirq
 import random
-my_qubits = []
-for i in range (10):
-  q = cirq.NamedQubit("q")
-  simulator = cirq.Simulator()
+def run_B92(repetitions):
+    my_qubits = []
+    for i in range (repetitions):
+      q = cirq.NamedQubit("q")
+      simulator = cirq.Simulator()
 
-  alice_bit = random.choice([0, 1])
+      alice_bit = random.choice([0, 1])
 
-  circuit = cirq.Circuit()
-  if alice_bit == 1:
-      circuit.append(cirq.X(q))
-      circuit.append(cirq.H(q))
-
-  bob_basis = random.choice(['Z', 'X'])
-  if bob_basis == 'X' and alice_bit == 0:
-      circuit.append(cirq.measure(q))
-      result = simulator.run(circuit, repetitions=1)
-      print(circuit)
-      print(result)
-      my_qubits.append(result)
-      print(f"Alice's Secret Bit: {alice_bit}")
-      print(f"Bob's Chosen Basis: {bob_basis}")
-      print("-" * 30)
-  elif bob_basis == 'Z' and alice_bit == 1:
-      circuit.append(cirq.H(q))
-      circuit.append(cirq.measure(q))
-      result = simulator.run(circuit, repetitions=1)
-      print(circuit)
-      print(result)
-      my_qubits.append(result)
-      print(f"Alice's Secret Bit: {alice_bit}")
-      print(f"Bob's Chosen Basis: {bob_basis}")
-      print("-" * 30)
-  else:
-      circuit.append(cirq.measure(q))
-      print("Discard")
-      print("-" * 30)
-my_qubits
+      circuit = cirq.Circuit()
+      if alice_bit == 1:
+          circuit.append(cirq.X(q))
+          circuit.append(cirq.H(q))
+    
+      bob_basis = random.choice(['Z', 'X'])
+      if bob_basis == 'X' and alice_bit == 0:
+          circuit.append(cirq.measure(q))
+          result = simulator.run(circuit, repetitions=1)
+          print(circuit)
+          print(result)
+          my_qubits.append(result)
+          print(f"Alice's Secret Bit: {alice_bit}")
+          print(f"Bob's Chosen Basis: {bob_basis}")
+          print("-" * 30)
+      elif bob_basis == 'Z' and alice_bit == 1:
+          circuit.append(cirq.H(q))
+          circuit.append(cirq.measure(q))
+          result = simulator.run(circuit, repetitions=1)
+          print(circuit)
+          print(result)
+          my_qubits.append(result)
+          print(f"Alice's Secret Bit: {alice_bit}")
+          print(f"Bob's Chosen Basis: {bob_basis}")
+          print("-" * 30)
+      else:
+          circuit.append(cirq.measure(q))
+          print("Discard")
+          print("-" * 30)
+    my_qubits
+    return my_qubits
