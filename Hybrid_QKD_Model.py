@@ -27,11 +27,6 @@ import ghz_group_b92_qkd
 import qkd_qith_ghz
 import quantum_coinflip
 
-for i in range(30):
-  if QuantumCoinflip(1) == 0:
-    run_B92(1)
-  else:
-    run_simulation(num_bits = 1, eavesdropped = False)
 count = 0
 Final = {}
 B92 = {run_B92(30)}
