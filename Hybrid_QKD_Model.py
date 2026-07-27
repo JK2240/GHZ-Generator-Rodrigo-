@@ -1,4 +1,4 @@
-
+import cirq
 import cirq_google
 import cirq_web
 import numpy as np
@@ -17,7 +17,7 @@ from cirq import Z, PauliSum
 import sys
 sys.meta_path[:] = [f for f in sys.meta_path if "DaskFinder" not in str(f)]
 import ghz_group_b92_qkd
-import QKD_with_GHZ
+import GHZ_QKD
 import quantum_coinflip
 
 count = 0
