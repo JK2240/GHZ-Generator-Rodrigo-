@@ -25,9 +25,9 @@ final = {}
 B92 = {run_B92(30)}
 QKD = {run_simulation(num_bits = 30, eavesdropped = False)}
 for i in range(30):
-  if B92(i) == 0 and QKD(i) == 0:
+  if B92[i] == 0 and QKD[i] == 0:
     final[count] = 0
     count = count + 1
-  elif B92(i) == 1 and QKD(i) == 1:
+  elif B92[i] == 1 and QKD[i] == 1:
     final[count] = 1
     count = count + 1
