@@ -31,4 +31,5 @@ for i in range(30):
   elif B92[i] == 1 and QKD[i] == 1:
     final[count] = 1
     count = count + 1
+print("FINAL KEY:")
 print(final)
