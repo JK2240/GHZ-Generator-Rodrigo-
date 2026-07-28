@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/195HqZpWMaXFUZJpiTiapugGCcgJzup_U
 """
 
-!pip install cirq --quiet
+
 import cirq
 
 cirq.density_matrix(
@@ -18,4 +18,4 @@ cirq.density_matrix(
     validate: bool = True,
     dtype: (DTypeLike | None) = None,
     atol: float = 1e-07
-) -> QuantumState
+    ) -> QuantumState

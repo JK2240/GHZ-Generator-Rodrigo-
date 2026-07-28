@@ -7,7 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1ZAX3Xogywo-2D67oE9G_u6HeMfGWTJs5
 """
 
-!pip install cirq --quiet
+
 import cirq
 
 cirq.fidelity(
@@ -16,4 +16,4 @@ cirq.fidelity(
     qid_shape: (tuple[int, ...] | None) = None,
     validate: bool = True,
     atol: float = 1e-07
-) -> float
+    ) -> float

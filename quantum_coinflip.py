@@ -7,11 +7,10 @@ Original file is located at
     https://colab.research.google.com/drive/11QX0RPakxGZDjGhE9Bs-UzPytOlcHT1a
 """
 
-!pip install cirq --quiet
+
 import cirq
 
 def QuantumCoinflip(repitions):
-
     qubit = cirq.NamedQubit('x')
     circuit = cirq.Circuit()
     circuit.append(cirq.H(qubit))
