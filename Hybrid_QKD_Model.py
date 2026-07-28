@@ -23,7 +23,14 @@ from quantum_coinflip import *
 count = 0
 final = []
 B92 = run_B92(30)
-QKD = run_simulation(120, False)
+QKD = run_simulation(30, False)
+while len(QKD) != len(B92):
+  add_QKD = run_simulation(1, False)
+  if(add_QKD == 0 or add_QKD == 1):
+    int(add_QKD)
+    QKD.append(add_QKD)
+print("GHZ Key:")
+print(QKD)
 for i in range(len(QKD)):
   if B92[i] == 0 and QKD[i] == 0:
     print("adding 0")
