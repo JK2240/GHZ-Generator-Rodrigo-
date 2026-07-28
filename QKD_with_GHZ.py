@@ -1,12 +1,5 @@
-!pip install --upgrade cirq cirq-google numpy
-try:
-  import cirq
-except ImportError:
-  print ("installing cirq...")
-  !pip install --quiet cirq
-  print("installed cirq.")
-  import cirq
 
+import cirq
 import cirq_google
 import cirq_web
 import numpy as np
@@ -120,4 +113,3 @@ def run_simulation(num_bits=20, eavesdropped=False):
 
 # --- Execute both scenarios ---
 alice_key_safe, bob_key_safe, charlie_key_safe = run_simulation(num_bits=30, eavesdropped=False)
-alice_key_eavesdropped, bob_key_eavesdropped, charlie_key_eavesdropped = run_simulation(num_bits=30, eavesdropped=True)
