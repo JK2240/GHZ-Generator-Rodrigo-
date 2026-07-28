@@ -16,9 +16,9 @@ from cirq import Z, PauliSum
 
 import sys
 sys.meta_path[:] = [f for f in sys.meta_path if "DaskFinder" not in str(f)]
-import ghz_group_b92_qkd
-import GHZ_QKD
-import quantum_coinflip
+from ghz_group_b92_qkd import *
+from GHZ_QKD import *
+from quantum_coinflip import *
 
 count = 0
 final = {}
