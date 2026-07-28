@@ -1,12 +1,5 @@
-!pip install --upgrade cirq cirq-google numpy
-try:
-  import cirq
-except ImportError:
-  print ("installing cirq...")
-  !pip install --quiet cirq
-  print("installed cirq.")
-  import cirq
 
+import cirq
 import cirq_google
 import cirq_web
 import numpy as np
