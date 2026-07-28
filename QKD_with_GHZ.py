@@ -69,7 +69,7 @@ def run_simulation(num_bits, eavesdropped):
     #print(f"{'Basis (A,B,C)':<15} | {'Raw Outcome (A,B,C)':<20} | Status")
     #print("-" * 60)
 
-    while len(shared_secure_key) < num_bits:
+    for _ in range(num_bits):
         # Randomly choose Z or X basis for all three parties
         a_basis = random.choice(['Z', 'X'])
         b_basis = random.choice(['Z', 'X'])
