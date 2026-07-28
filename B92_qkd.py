@@ -19,7 +19,8 @@ def run_B92(repetitions):
   alice_key = []
   bob_key = []
   my_qubits = []
-  for i in range (repetitions):
+  shared_key = []
+  while len(shared_key) < repetitions:
     q = cirq.NamedQubit("q")
     simulator = cirq.Simulator()
 
