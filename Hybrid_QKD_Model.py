@@ -23,7 +23,7 @@ from quantum_coinflip import *
 count = 0
 final = []
 B92 = [run_B92(30)]
-QKD = [run_simulation(num_bits = len(B92), eavesdropped = False)]
+QKD = [run_simulation(len(B92), False)]
 for i in range(len(B92)):
   if B92[i] == 0 and QKD[i] == 0:
     final[count] = 0
