@@ -22,16 +22,16 @@ from quantum_coinflip import *
 
 count = 0
 final = []
-B92 = [run_B92(30)]
-QKD = [run_simulation(30, False)]
-for i in range(len(B92)):
-  if B92[i] == [0] and QKD[i] == [0]:
+B92 = run_B92(30)
+QKD = run_simulation(30, False)
+for i in range(len(QKD)):
+  if B92[i] == 0 and QKD[i] == 0:
     print("adding 0")
-    final[count] = 0
+    final.append(0)
     count = count + 1
-  elif B92[i] == [1] and QKD[i] == [1]:
+  elif B92[i] == 1 and QKD[i] == 1:
     print("adding 1")
-    final[count] = 1
+    final.append(1)
     count = count + 1
 print("FINAL KEY:")
 print(final)
