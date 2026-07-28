@@ -57,7 +57,7 @@ def create_ghz_circuit(alice_basis, bob_basis, charlie_basis, eve_interferes=Fal
 
     return circuit
 
-def run_simulation(num_bits=20, eavesdropped=False):
+def run_simulation(num_bits, eavesdropped):
     simulator = cirq.Simulator()
 
     final_alice_key = []
