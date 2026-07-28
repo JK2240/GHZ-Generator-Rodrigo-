@@ -108,6 +108,7 @@ def run_simulation(num_bits=20, eavesdropped=False):
         print(f"Shared Secure Key: {shared_secure_key}")
     else:
         print("[!] ALERT: Keys do not match! Eavesdropper detected on the network.")
+    print("GHZ Key:")
     print(shared_secure_key)
     return final_alice_key, final_bob_key, final_charlie_key
 

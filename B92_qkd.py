@@ -76,6 +76,6 @@ def run_B92(repetitions):
         #print("[+] SUCCESS: All keys match perfectly! Channel is secure.")
         shared_key = [int(key) for key in alice_key]
         #print(f"Shared Key: {shared_key}")
-
+  print("B92 Key:")
   print(shared_key)
   return shared_key
