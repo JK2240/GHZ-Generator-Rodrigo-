@@ -112,4 +112,4 @@ def run_simulation(num_bits=20, eavesdropped=False):
     return final_alice_key, final_bob_key, final_charlie_key
 
 # --- Execute both scenarios ---
-alice_key_safe, bob_key_safe, charlie_key_safe = run_simulation(num_bits=30, eavesdropped=False)
+
