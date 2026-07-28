@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1fO_T87kNkYiPgAODqohxq0053jeUqWoY
 """
 
-!pip install cirq --quiet
-
 import cirq
 import random
 def run_B92(repetitions):
