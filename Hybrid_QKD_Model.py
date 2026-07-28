@@ -26,9 +26,9 @@ B92 = run_B92(30)
 QKD = run_simulation(30, False)
 while len(QKD) != len(B92):
   add_QKD = run_simulation(1, False)
-  if(add_QKD == 0 or add_QKD == 1):
-    int(add_QKD)
-    QKD.append(add_QKD)
+  if(add_QKD == [0] or add_QKD == [1]):
+    value = add_QKD[0]
+    QKD.append(value)
 print("GHZ Key:")
 print(QKD)
 for i in range(len(QKD)):
