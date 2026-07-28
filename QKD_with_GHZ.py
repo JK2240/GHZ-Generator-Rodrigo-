@@ -77,7 +77,7 @@ def run_simulation(num_bits, eavesdropped):
 
         # Build and simulate the circuit for this single bit
         circuit = create_ghz_circuit(a_basis, b_basis, c_basis, eve_interferes=eavesdropped)
-        result = simulator.run(circuit, repetitions=1)
+        result = simulator.run(circuit, repetitions=100)
 
         # Extract the results (0 or 1)
         a_res = result.measurements['Alice'][0][0]
