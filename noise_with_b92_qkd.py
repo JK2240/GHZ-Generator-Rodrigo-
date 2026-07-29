@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1HBPyei5bgtr1k7xGUzVOkg9Y0RMp-xel
 """
 
-!pip install --upgrade cirq cirq-google numpy
 
 import cirq
 import cirq_google
