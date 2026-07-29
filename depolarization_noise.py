@@ -29,7 +29,7 @@ from cirq import Z, PauliSum
 import sys
 sys.meta_path[:] = [f for f in sys.meta_path if "DaskFinder" not in str(f)]
 
-depolarize_noise = cirq.depolarize(0.05) #Change 0.05 to whatever decimal to change depolarization chance
+depolarize_noise = cirq.depolarize(0.11) #Change 0.05 to whatever decimal to change depolarization chance
 
 simulator = cirq.Simulator()
 
