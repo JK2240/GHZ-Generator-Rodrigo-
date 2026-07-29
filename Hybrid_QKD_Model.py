@@ -20,15 +20,19 @@ from B92_qkd import *
 from QKD_with_GHZ import *
 from quantum_coinflip import *
 
+QKD_count = 30
 count = 0
 final = []
 B92 = run_B92(30)
 QKD = run_simulation(30, False)
 while len(QKD) != len(B92):
   add_QKD = run_simulation(1, False)
+  QKD_count += 1
   if(add_QKD == [0] or add_QKD == [1]):
     value = add_QKD[0]
     QKD.append(value)
+print("GHZ Iterations:")
+print(QKD_count)
 print("GHZ Key:")
 print(QKD)
 for i in range(len(QKD)):

@@ -20,7 +20,9 @@ def run_B92(repetitions):
   bob_key = []
   my_qubits = []
   shared_key = []
+  loops = 0
   while len(shared_key) < repetitions:
+    loops += 1
     q = cirq.NamedQubit("q")
     simulator = cirq.Simulator()
 
@@ -77,6 +79,8 @@ def run_B92(repetitions):
         #print("[+] SUCCESS: All keys match perfectly! Channel is secure.")
         shared_key = [int(key) for key in alice_key]
         #print(f"Shared Key: {shared_key}")
+  print("B92 Iterations:")
+  print(loops)
   print("B92 Key:")
   print(shared_key)
   return shared_key
