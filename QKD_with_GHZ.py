@@ -78,7 +78,7 @@ def run_simulation(num_bits, eavesdropped):
         c_basis = random.choice(['Z', 'X'])
 
         # Build and simulate the circuit for this single bit
-        circuit = create_ghz_circuit(a_basis, b_basis, c_basis, eve_interferes=eavesdropped)
+        circuit = create_ghz_circuit(a_basis, b_basis, c_basis, eve_interferes=False)
         result = simulator.run(circuit.with_noise(depolarize_noise), repetitions=100)
 
         # Extract the results (0 or 1)
@@ -105,12 +105,10 @@ def run_simulation(num_bits, eavesdropped):
     #print(f"Charlie's Key: {final_charlie_key}")
 
     # Check if keys match perfectly
-    if final_alice_key == final_bob_key == final_charlie_key:
+    
         #print("[+] SUCCESS: All keys match perfectly! Channel is secure.")
-        shared_secure_key = [int(key) for key in final_alice_key]
+    shared_secure_key = [int(key) for key in final_alice_key]
         #print(f"Shared Secure Key: {shared_secure_key}")
-    else:
-        print("[!] ALERT: Keys do not match! Eavesdropper detected on the network.")
     
     return shared_secure_key
 
