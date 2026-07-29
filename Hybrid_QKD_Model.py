@@ -33,11 +33,9 @@ print("GHZ Key:")
 print(QKD)
 for i in range(len(QKD)):
   if B92[i] == 0 and QKD[i] == 0:
-    print("adding 0")
     final.append(0)
     count = count + 1
   elif B92[i] == 1 and QKD[i] == 1:
-    print("adding 1")
     final.append(1)
     count = count + 1
 print("FINAL KEY:")
