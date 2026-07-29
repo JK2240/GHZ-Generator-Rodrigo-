@@ -23,7 +23,7 @@ from quantum_coinflip import *
 count = 0
 final = []
 B92 = run_B92(30)
-QKD = run_simulation(120, False)
+QKD = run_simulation(30, False)
 for i in range(len(QKD)):
   if B92[i] == 0 and QKD[i] == 0:
     print("adding 0")
