@@ -60,6 +60,8 @@ def create_ghz_circuit(alice_basis, bob_basis, charlie_basis, eve_interferes=Fal
 def run_simulation(num_bits, eavesdropped):
     simulator = cirq.Simulator()
 
+    depolarize_noise = cirq.depolarize(0.11)
+
     final_alice_key = []
     final_bob_key = []
     final_charlie_key = []
@@ -77,7 +79,7 @@ def run_simulation(num_bits, eavesdropped):
 
         # Build and simulate the circuit for this single bit
         circuit = create_ghz_circuit(a_basis, b_basis, c_basis, eve_interferes=eavesdropped)
-        result = simulator.run(circuit, repetitions=100)
+        result = simulator.run(circuit.with_noise(depolarize_noise), repetitions=100)
 
         # Extract the results (0 or 1)
         a_res = result.measurements['Alice'][0][0]
