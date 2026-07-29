@@ -1,4 +1,3 @@
-
 import cirq
 import cirq_google
 import cirq_web
@@ -20,9 +19,12 @@ def run_B92(repetitions):
   bob_key = []
   my_qubits = []
   shared_key = []
+  loops = 0
   while len(shared_key) < repetitions:
+    loops += 1
     q = cirq.NamedQubit("q")
     simulator = cirq.Simulator()
+    depolarize_noise = cirq.depolarize(0.11) # Add depolarization noise with 11% chance
 
     alice_bit = random.choice([0, 1])
 
@@ -30,12 +32,12 @@ def run_B92(repetitions):
     if alice_bit == 1:
       circuit.append(cirq.X(q))
       circuit.append(cirq.H(q))
-  
+
     bob_basis = random.choice(['Z', 'X'])
 
     if bob_basis == 'X' and alice_bit == 0:
         circuit.append(cirq.measure(q, key='mm'))
-        result = simulator.run(circuit, repetitions=1)
+        result = simulator.run(circuit.with_noise(depolarize_noise), repetitions=1)
         measurement = result.measurements['mm'][0][0]
         if measurement == 0:
           alice_key.append(alice_bit)
@@ -51,7 +53,7 @@ def run_B92(repetitions):
     elif bob_basis == 'Z' and alice_bit == 1:
         circuit.append(cirq.H(q))
         circuit.append(cirq.measure(q, key = 'mm'))
-        result = simulator.run(circuit, repetitions=1)
+        result = simulator.run(circuit.with_noise(depolarize_noise), repetitions=1)
         measurement = result.measurements['mm'][0][0]
         if measurement == 1:
           alice_key.append(alice_bit)
@@ -77,6 +79,8 @@ def run_B92(repetitions):
         #print("[+] SUCCESS: All keys match perfectly! Channel is secure.")
         shared_key = [int(key) for key in alice_key]
         #print(f"Shared Key: {shared_key}")
+  print("B92 Iterations:")
+  print(loops)
   print("B92 Key:")
   print(shared_key)
   return shared_key
