@@ -8,7 +8,22 @@ Original file is located at
 """
 
 !pip install cirq --quiet
+
 import cirq
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_qubits = 3
+qubits = cirq.LineQubit.range(n_qubits)
+
+circuit = cirq.Circuit()
+circuit.append(cirq.H(qubits[0]))
+for i in range(n_qubits - 1):
+    circuit.append(cirq.CNOT(qubits[i], qubits[i + 1]))
+
+state_vector = cirq.final_state_vector(circuit)
+state_matrix = np.outer(state_vector, np.conj(state_vector))
+print("State Vector:", state_vector)
 
 import cirq
 import numpy as np
@@ -25,9 +40,12 @@ state_vector = cirq.final_state_vector(circuit)
 state_matrix = np.outer(state_vector, np.conj(state_vector))
 print("State Vector:", state_vector)
 
+
+
+#GHZ
 Pghzi= cirq.density_matrix(
     state = state_matrix,
-    qid_shape = None,
+    qid_shape = (2,2,2),
     copy = False,
     validate= True,
     dtype = None,
@@ -41,13 +59,19 @@ pghzi_matrix = Pghzi.density_matrix()
 dim = 2**n_qubits
 identity_matrix = np.identity(dim, dtype=pghzi_matrix.dtype)
 
-
-PghzN_matrix = (1 - 0.11) * pghzi_matrix + (0.11 / dim) * identity_matrix
+P1 = 0.11
+PghzN_matrix = (1 - P1) * pghzi_matrix + (P1 / dim) * identity_matrix
 
 
 PghzN = cirq.density_matrix(state=PghzN_matrix, qid_shape=Pghzi.qid_shape)
 print("WITH NOISE ")
 print(PghzN.density_matrix())
+
+
+
+#B92
+
+
 
 state_vector_0 = np.array([1.0, 0.0], dtype=np.complex64)
 state_matrix_0 = np.outer(state_vector_0, np.conj(state_vector_0))
@@ -70,8 +94,8 @@ pb92i_matrix = Pb92i.density_matrix()
 dim_single_qubit = 2**1
 identity_matrix_single_qubit = np.identity(dim_single_qubit, dtype=pb92i_matrix.dtype)
 
-
-Pb92N_matrix = (1 - 0.05) * pb92i_matrix + (0.05 / dim_single_qubit) * identity_matrix_single_qubit
+P2= 0.05
+Pb92N_matrix = (1 - P2) * pb92i_matrix + (P2 / dim_single_qubit) * identity_matrix_single_qubit
 
 
 Pb92N = cirq.density_matrix(state=Pb92N_matrix, qid_shape=Pb92i.qid_shape)
@@ -90,5 +114,39 @@ fidelity_b92 = cirq.fidelity(
 
 total_fidelity = (fidelity_ghz ** 15) * (fidelity_b92 ** 15)
 
-print(f"Total 60-Qubit System Fidelity: {total_fidelity:.4f}")
+print(f"Total 30-Qubit System Fidelity: {total_fidelity:.4f}")
 
+p_values = np.linspace(0.0, 0.20, 100)
+total_fidelities = []
+
+for p in p_values:
+    # Noisy GHZ matrix
+    PghzN_matrix = (1 - p) * pghzi_matrix + (p / dim) * identity_matrix
+    PghzN = cirq.density_matrix(state=PghzN_matrix, qid_shape=Pghzi.qid_shape)
+
+    # Noisy B92 matrix
+    Pb92N_matrix = (1 - p) * pb92i_matrix + (p / dim_single_qubit) * identity_matrix_single_qubit
+    Pb92N = cirq.density_matrix(state=Pb92N_matrix, qid_shape=Pb92i.qid_shape)
+
+    #Indivdal fidleties
+    fidelity_ghz = cirq.fidelity(state1=Pghzi, state2=PghzN)
+    fidelity_b92 = cirq.fidelity(state1=Pb92i, state2=Pb92N)
+
+    #total
+    total_fidelity = (fidelity_ghz ** 15) * (fidelity_b92 ** 15)
+    total_fidelities.append(total_fidelity)
+
+    print(f"Total 60-Qubit System Fidelity for P={p:.2f}: {total_fidelity:.4f}")
+
+plt.figure(figsize=(8, 5))
+# Convert p_values to standard percentages (0 to 20) for the X-axis
+plt.plot(p_values * 100, total_fidelities, color='blue', linewidth=2, label='60-Qubit Combined System')
+
+plt.title("Total Fidelity vs. Percent Noise ($P$)", fontsize=12, fontweight='bold')
+plt.xlabel("Noise Level $P$ (%)", fontsize=11)
+plt.ylabel("Total Multiplicative Fidelity", fontsize=11)
+plt.xlim(0, 20)
+plt.ylim(0, 1.05)
+plt.grid(True, linestyle='--', alpha=0.6)
+plt.legend()
+plt.show()
