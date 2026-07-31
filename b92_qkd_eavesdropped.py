@@ -14,7 +14,6 @@ from scipy.optimize import minimize
 from cirq_web import bloch_sphere
 from cirq import Z, PauliSum
 
-# ADDITION 1: Added 'verbose=True'. It defaults to printing everything normally.
 def run_B92(repetitions, eavesdropper_active=False, verbose=True):
   alice_key = []
   bob_key = []
@@ -32,7 +31,6 @@ def run_B92(repetitions, eavesdropper_active=False, verbose=True):
       circuit.append(cirq.X(q))
       circuit.append(cirq.H(q))
 
-    # --- Eavesdropper's action ---
     if eavesdropper_active:
       eve_basis = random.choice(['Z', 'X'])
       # Eve measures the qubit in her chosen random basis, collapsing its state.
@@ -61,7 +59,6 @@ def run_B92(repetitions, eavesdropper_active=False, verbose=True):
         alice_key.append(alice_bit)
         bob_key.append(measurement)
 
-  # ADDITION 2: Indented your exact print block under 'if verbose:'
   if verbose:
       print("B92 Iterations required to generate requested key length:")
       print(loops)
@@ -81,32 +78,26 @@ def run_B92(repetitions, eavesdropper_active=False, verbose=True):
           print(f"\n[-] FAILURE: {mismatches} mismatches found between Alice's and Bob's keys.")
           print("Eavesdropper detected due to discrepancies in keys!")
 
-  # Left your exact return statement untouched
   return alice_key, bob_key
 
 
 # --- Scenario: With Eavesdropper, increased repetitions ---
 print("\n--- Running B92 Protocol (With Eavesdropper, 100 repetitions) ---")
-# Runs normally and prints out your text blocks
 alice_key_with_eve_100, bob_key_with_eve_100 = run_B92(repetitions=100, eavesdropper_active=True, verbose=True)
 
 
-# --- ADDITION 3: The Simulation & Graphing Loop ---
 max_key_length = 25 
 trials_per_length = 50 
 
 key_lengths = list(range(1, max_key_length + 1))
 detection_probabilities = []
 
-print(f"\nRunning graphing simulation ({max_key_length * trials_per_length} total quantum circuits). Please wait...")
 
 for length in key_lengths:
     detections = 0
     for _ in range(trials_per_length):
-        # We set verbose=False here so it doesn't print 1,250 times
         a_key, b_key = run_B92(repetitions=length, eavesdropper_active=True, verbose=False)
         
-        # Because we kept your original return, we calculate the mismatches here in the loop
         mismatches = sum(1 for a, b in zip(a_key, b_key) if a != b)
         if mismatches > 0:
             detections += 1

@@ -7,8 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1xEUs67jjuspIv7j1eghlOgc51--Jezvd
 """
 
-!pip install --upgrade cirq cirq-google numpy
-
 import cirq
 import cirq_google
 import cirq_web
@@ -230,3 +228,46 @@ analysis_results = analyze_qkd_results(
     alice_bases, bob_bases, charlie_bases
 )
 print(f"\nSecurity Analysis Results:\n{analysis_results}")
+print("\n--- Generating Graph: Detection Probability vs Total Bits ---\n")
+
+max_test_bits = 150 # Test up to 150 bits
+step_size = 5       # Check every 5 bits
+trials_per_step = 25 # Run 25 trials for each step to get a good average probability
+
+bit_lengths = list(range(5, max_test_bits + 1, step_size))
+detection_probabilities = []
+
+print(f"Running simulation background loop. Please wait...")
+
+for bits in bit_lengths:
+    detections = 0
+    for _ in range(trials_per_step):
+        # 1. Run the simulation quietly
+        a_res, b_res, c_res, a_bas, b_bas, c_bas = run_simulation(
+            num_bits=bits,
+            eavesdropper_present=True,
+            eve_attack_probability=1.0,
+            eve_apply_x_gate_probability=0.0
+        )
+        
+        # 2. Get the analysis string
+        analysis_str = analyze_qkd_results(a_res, b_res, c_res, a_bas, b_bas, c_bas)
+        
+        # 3. Check if the string contains your "DETECTED!" message
+        if "Overall: Eavesdropper DETECTED!" in analysis_str:
+            detections += 1
+            
+    prob = detections / trials_per_step
+    detection_probabilities.append(prob)
+
+# Plot the graph
+plt.figure(figsize=(10, 6))
+plt.plot(bit_lengths, detection_probabilities, marker='o', linestyle='-', color='#d62728')
+plt.title('GHZ Protocol: Eavesdropper Detection Probability vs Total Sent Bits')
+plt.xlabel('Total Bits Sent')
+plt.ylabel('Probability of Detecting Eavesdropper')
+plt.ylim(-0.05, 1.05) 
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.axhline(y=1.0, color='r', linestyle='--', alpha=0.5, label='100% Detection')
+plt.legend()
+plt.show()
